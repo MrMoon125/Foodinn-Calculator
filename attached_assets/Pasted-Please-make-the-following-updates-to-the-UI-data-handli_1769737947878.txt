@@ -1,0 +1,87 @@
+Please make the following updates to the UI, data handling, and user access system carefully:
+
+1. Three-Dot Menu Styling
+
+When the three-dot (⋮) menu is clicked:
+
+The background color of the options should be white.
+
+The text color should be pure black.
+
+The text should be bold for better visibility and clarity.
+
+The menu should look clean, professional, and easy to read.
+
+2. Excel Sheet Data Structure (Important)
+
+The Excel sheet should contain only the following columns:
+
+Customer Name
+
+Including VAT
+
+Account Balance
+
+No additional columns are required.
+
+3. User Login, Signup & Access Control
+
+Before the calculator opens, there must be a login screen.
+
+The login system should include:
+
+Username
+
+Password
+
+A Signup option should also be available so new users can register.
+
+Admin Setup
+
+My email address must be set as the Admin account:
+
+mr125moon@gmail.com
+
+Only the Admin should have permission to:
+
+Approve or allow users (if approval logic is applied)
+
+Manage overall access if required
+
+4. Multi-User Data Handling
+
+Multiple users may use the calculator:
+
+At the same time, or
+
+At different times.
+
+All users’ calculation data must be saved into the same single Excel sheet (the one defined above).
+
+The Excel sheet must:
+
+Not mention or store which user created the data
+
+Only store customer-related calculation data
+
+5. Data Save & Update Logic
+
+When a calculation is performed:
+
+The data should be saved automatically to the Excel sheet.
+
+If a calculation is done again for the same customer:
+
+The existing row for that customer should be automatically updated, not duplicated.
+
+The Excel file should always contain the latest values only.
+
+6. Download & Accuracy
+
+There should be an option to download the Excel file at any time.
+
+All calculations (Including VAT and Account Balance) must remain 100% accurate.
+
+UI changes and authentication features must not affect calculator performance or calculation logic.
+
+Please ensure the system remains stable, secure, and easy to use while implementing these changes
