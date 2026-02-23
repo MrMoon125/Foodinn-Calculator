@@ -10,3 +10,4 @@ attached_assets/*.json
 .local
 node_modules
 dist
+.replit
