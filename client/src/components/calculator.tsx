@@ -82,19 +82,21 @@ export default function FoodinnCalculator() {
     const effectiveTerminalSale = mode === "online" ? 0 : terminalSale;
     const effectiveChargePerWeek = mode === "terminal" ? 0 : chargePerWeek;
 
-    const chargePerPeriod = (effectiveChargePerWeek / 7) * periodDays;
-    const onlineCardFee = effectiveOnlineSale * (onlineCardFeePercent / 100);
-    const terminalCardFee = effectiveTerminalSale * (terminalCardFeePercent / 100);
-    const extraAmount = showExtra ? extraAmountVal : 0;
+    const round2 = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
 
-    const subTotalFees = chargePerPeriod + onlineCardFee + terminalCardFee + extraAmount;
-    const vat = subTotalFees * 0.23;
-    const includingVat = subTotalFees + vat;
+    const chargePerPeriod = round2((effectiveChargePerWeek / 7) * periodDays);
+    const onlineCardFee = round2(effectiveOnlineSale * (onlineCardFeePercent / 100));
+    const terminalCardFee = round2(effectiveTerminalSale * (terminalCardFeePercent / 100));
+    const extraAmount = showExtra ? round2(extraAmountVal) : 0;
+
+    const subTotalFees = round2(chargePerPeriod + onlineCardFee + terminalCardFee + extraAmount);
+    const vat = round2(subTotalFees * 0.23);
+    const includingVat = round2(subTotalFees + vat);
     
-    const totalSale = onlineCardSale + terminalSale;
+    const totalSale = round2(onlineCardSale + terminalSale);
     
-    const totalSalesForBalance = effectiveOnlineSale + effectiveTerminalSale;
-    const accountBalance = totalSalesForBalance - includingVat;
+    const totalSalesForBalance = round2(effectiveOnlineSale + effectiveTerminalSale);
+    const accountBalance = round2(totalSalesForBalance - includingVat);
 
     setResults({
       periodDays,
