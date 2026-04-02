@@ -16,7 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { MoreVertical } from "lucide-react";
+import { MoreVertical, Copy, Check } from "lucide-react";
 
 const schema = z.object({
   restaurantName: z.string().optional(),
@@ -41,6 +41,7 @@ export default function FoodinnCalculator() {
   const [results, setResults] = useState<any>(null);
   const [mode, setMode] = useState<CalculationMode>("online");
   const [showExtra, setShowExtra] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -119,6 +120,18 @@ export default function FoodinnCalculator() {
 
   const formatNum = (val: number) => val.toFixed(2);
 
+  const handleCopy = () => {
+    if (!results) return;
+    
+    // Format text with a tab character (\t) so it pastes into two separate columns in Google Sheets
+    const copyText = `${formatNum(results.includingVat)}\t${formatNum(results.accountBalance)}`;
+    
+    navigator.clipboard.writeText(copyText).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 font-sans flex flex-col items-start justify-start gap-4">
       <Card className="w-[560px] border-none shadow-lg rounded-2xl overflow-hidden relative">
@@ -163,6 +176,20 @@ export default function FoodinnCalculator() {
               </DropdownMenu>
             </div>
             <h1 className="text-white text-[28px] font-bold tracking-tight whitespace-nowrap leading-none w-full text-center">Foodinn Calculator</h1>
+            
+            {results && (
+              <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                <Button 
+                  onClick={handleCopy}
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-white hover:bg-white/20 rounded-md border border-white/40 h-8 px-2 flex items-center gap-1 text-xs font-medium"
+                >
+                  {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  {copied ? "Copied!" : "Copy Amounts"}
+                </Button>
+              </div>
+            )}
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="p-3 grid grid-cols-2 gap-4 items-start">
